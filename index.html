@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TELETHON 2025</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f9ff; /* Light blue background */
+        }
+        .loader {
+            border: 4px solid #e5e7eb; /* gray-200 */
+            border-radius: 50%;
+            border-top: 4px solid #0891b2; /* cyan-600 */
+            width: 32px;
+            height: 32px;
+            animation: spin 1.5s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        select:required:invalid {
+            color: #6b7280; /* gray-500 */
+        }
+        select:disabled, input:disabled {
+            background-color: #f3f4f6; /* gray-100 */
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        .form-container {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            transition: all 0.3s ease-in-out;
+        }
+        .form-container:hover {
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+        }
+        .submit-button {
+            background: linear-gradient(to right, #06b6d4, #0891b2); /* cyan-500 to cyan-600 */
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+    <div class="w-full max-w-lg mx-auto p-6 sm:p-8 form-container">
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-extrabold text-cyan-800">TELETHON 2025</h1>
+            <p class="text-lg text-gray-500 mt-2">GREAT GRAND FINAL</p>
+        </div>
+
+        <div id="config-error" class="hidden bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-md mb-6" role="alert">
+            <p class="font-bold">Configuration Error!</p>
+            <p>Aapne Google Script URL paste nahi kiya hai. Please `index.html` file mein `scriptURL` variable ko update karein.</p>
+        </div>
+
+        <form name="submit-to-google-sheet">
+            <div class="space-y-5">
+                <!-- Region Dropdown -->
+                <div>
+                    <label for="region" class="block text-sm font-semibold text-gray-700 mb-1">Region</label>
+                    <select name="Region" id="region" required class="w-full px-4 py-2.5 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition duration-150 ease-in-out bg-white">
+                        <option value="" disabled selected>Loading Regions...</option>
+                    </select>
+                </div>
+                <!-- Talimi Zimmedar Dropdown -->
+                <div>
+                    <label for="talimi-zimmedar" class="block text-sm font-semibold text-gray-700 mb-1">Talimi Zimmedar</label>
+                    <select name="Talimi Zimmedar" id="talimi-zimmedar" required disabled class="w-full px-4 py-2.5 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition duration-150 ease-in-out">
+                        <option value="" disabled selected>Pehle Region Select karen</option>
+                    </select>
+                </div>
+                <!-- Jamia Dropdown -->
+                <div>
+                    <label for="jamia" class="block text-sm font-semibold text-gray-700 mb-1">Jamia</label>
+                    <select name="Jamia" id="jamia" required disabled class="w-full px-4 py-2.5 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition duration-150 ease-in-out">
+                        <option value="" disabled selected>Pehle Talimi Zimmedar Select karen</option>
+                    </select>
+                </div>
+                <!-- Class Dropdown -->
+                <div>
+                    <label for="class" class="block text-sm font-semibold text-gray-700 mb-1">Class (jis ke Class teacher hai)</label>
+                    <select name="Class" id="class" required class="w-full px-4 py-2.5 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition duration-150 ease-in-out bg-white">
+                        <option value="" disabled selected>Class Select karen</option>
+                        <option value="Hifz Class">Hifz Class</option>
+                        <option value="Ibtidaiya">Ibtidaiya</option>
+                        <option value="Sale Awaal">Sale Awaal</option>
+                        <option value="Sale Duwam">Sale Duwam</option>
+                        <option value="Ula">Ula</option>
+                        <option value="Saniya">Saniya</option>
+                        <option value="Salisa">Salisa</option>
+                        <option value="Rabia">Rabia</option>
+                        <option value="Khamisa">Khamisa</option>
+                        <option value="Sadisa">Sadisa</option>
+                        <option value="Sabia">Sabia</option>
+                        <option value="Doratul Hadis">Doratul Hadis</option>
+                    </select>
+                </div>
+                <!-- Name Input -->
+                <div>
+                    <label for="name" class="block text-sm font-semibold text-gray-700 mb-1">Name</label>
+                    <input type="text" name="Name" id="name" required class="w-full px-4 py-2.5 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition duration-150 ease-in-out">
+                </div>
+                <div>
+                    <label for="total-amount" class="block text-sm font-semibold text-gray-700 mb-1">Aaj tak Ka Total Amount</label>
+                    <input type="number" name="Aaj tak Ka Total Amount" id="total-amount" required class="w-full px-4 py-2.5 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition duration-150 ease-in-out">
+                </div>
+            </div>
+
+            <div class="mt-8">
+                <button type="submit" id="submit-button" class="submit-button w-full text-white font-bold py-3 px-6 rounded-lg hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 transition duration-300 ease-in-out flex items-center justify-center shadow-lg">
+                    <span id="button-text">Submit Karein</span>
+                    <div id="loader" class="loader hidden"></div>
+                </button>
+            </div>
+        </form>
+        <p id="response-message" class="mt-6 text-center font-medium text-lg"></p>
+    </div>
+
+    <script>
+        // YAHAN APNA NAYA GOOGLE APPS SCRIPT URL PASTE KAREIN
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbz9sMiHPaZsR4LZ4NigHLw5b9a5yo7C4JzeSjUB9t2DZt5OHQQlNVojxLuurfWY-lLE/exec';
+        
+        const form = document.forms['submit-to-google-sheet'];
+        const submitButton = document.getElementById('submit-button');
+        const buttonText = document.getElementById('button-text');
+        const loader = document.getElementById('loader');
+        const responseMessage = document.getElementById('response-message');
+        
+        const regionSelect = document.getElementById('region');
+        const zimmedarSelect = document.getElementById('talimi-zimmedar');
+        const jamiaSelect = document.getElementById('jamia');
+        let allData = []; 
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const configErrorDiv = document.getElementById('config-error');
+            if (scriptURL === 'YAHAN_APNA_SCRIPT_URL_PASTE_KAREIN' || !scriptURL.startsWith('https://script.google.com/')) {
+                configErrorDiv.classList.remove('hidden');
+                submitButton.disabled = true;
+                submitButton.classList.add('opacity-50', 'cursor-not-allowed');
+                regionSelect.innerHTML = '<option value="" disabled selected>URL Configure Karein</option>';
+                return;
+            }
+            fetch(scriptURL) 
+                .then(response => {
+                    if (!response.ok) { throw new Error('Network response theek nahi hai'); }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.result === 'error') { throw new Error(data.error); }
+                    allData = data.data; 
+                    populateRegions();
+                })
+                .catch(error => {
+                    console.error('Dropdown data fetch error:', error);
+                    regionSelect.innerHTML = '<option value="" disabled selected>Data load nahi ho paya</option>';
+                });
+        });
+
+        function populateRegions() {
+            const regions = [...new Set(allData.map(item => item.region))];
+            populateDropdown(regionSelect, regions, 'Region Select karen');
+        }
+        
+        function populateDropdown(selectElement, options, defaultText) {
+            selectElement.innerHTML = '';
+            let defaultOption = document.createElement('option');
+            defaultOption.textContent = defaultText;
+            defaultOption.value = '';
+            defaultOption.disabled = true;
+            defaultOption.selected = true;
+            selectElement.appendChild(defaultOption);
+            options.forEach(optionText => {
+                if (optionText) { 
+                    let option = document.createElement('option');
+                    option.textContent = optionText;
+                    option.value = optionText;
+                    selectElement.appendChild(option);
+                }
+            });
+        }
+
+        regionSelect.addEventListener('change', () => {
+            const selectedRegion = regionSelect.value;
+            zimmedarSelect.innerHTML = '<option value="" disabled selected>Talimi Zimmedar Select karen</option>';
+            zimmedarSelect.disabled = true;
+            jamiaSelect.innerHTML = '<option value="" disabled selected>Pehle Talimi Zimmedar Select karen</option>';
+            jamiaSelect.disabled = true;
+            if (selectedRegion) {
+                const filteredZimmedars = [...new Set(allData
+                    .filter(item => item.region === selectedRegion)
+                    .map(item => item.zimmedar))];
+                populateDropdown(zimmedarSelect, filteredZimmedars, 'Talimi Zimmedar Select karen');
+                zimmedarSelect.disabled = false;
+            }
+        });
+
+        zimmedarSelect.addEventListener('change', () => {
+            const selectedRegion = regionSelect.value;
+            const selectedZimmedar = zimmedarSelect.value;
+            jamiaSelect.innerHTML = '<option value="" disabled selected>Jamia Select karen</option>';
+            jamiaSelect.disabled = true;
+            if (selectedZimmedar) {
+                const filteredJamias = [...new Set(allData
+                    .filter(item => item.region === selectedRegion && item.zimmedar === selectedZimmedar)
+                    .map(item => item.jamia))];
+                populateDropdown(jamiaSelect, filteredJamias, 'Jamia Select karen');
+                jamiaSelect.disabled = false;
+            }
+        });
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            submitButton.disabled = true;
+            buttonText.classList.add('hidden');
+            loader.classList.remove('hidden');
+            responseMessage.textContent = '';
+            responseMessage.className = 'mt-6 text-center font-medium text-lg';
+
+            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+                .then(response => response.json())
+                .then(data => {
+                    responseMessage.textContent = 'Data सफलतापूर्वक save ho gaya hai!';
+                    responseMessage.classList.add('text-green-600');
+                    form.reset();
+                    // Dropdowns ko reset karein
+                    zimmedarSelect.innerHTML = '<option value="" disabled selected>Pehle Region Select karen</option>';
+                    zimmedarSelect.disabled = true;
+                    jamiaSelect.innerHTML = '<option value="" disabled selected>Pehle Talimi Zimmedar Select karen</option>';
+                    jamiaSelect.disabled = true;
+                    regionSelect.selectedIndex = 0;
+                })
+                .catch(error => {
+                    responseMessage.textContent = 'Error! Data save nahi ho paya.';
+                    responseMessage.classList.add('text-red-600');
+                })
+                .finally(() => {
+                    submitButton.disabled = false;
+                    buttonText.classList.remove('hidden');
+                    loader.classList.add('hidden');
+                });
+        });
+    </script>
+</body>
+</html>
+
