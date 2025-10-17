@@ -225,7 +225,7 @@
             fetch(scriptURL, { method: 'POST', body: new FormData(form)})
                 .then(response => response.json())
                 .then(data => {
-                    responseMessage.textContent = 'Data सफलतापूर्वक save ho gaya hai!';
+                    responseMessage.textContent = 'THANKS..!';
                     responseMessage.classList.add('text-green-600');
                     form.reset();
                     // Dropdowns ko reset karein
@@ -248,4 +248,5 @@
     </script>
 </body>
 </html>
+
 
