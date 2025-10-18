@@ -52,6 +52,7 @@
         <div class="text-center mb-8">
             <h1 class="text-4xl font-extrabold text-cyan-800">TELETHON 2025</h1>
             <p class="text-lg text-gray-500 mt-2">GREAT GRAND FINAL</p>
+            <p class="text-sm text-gray-600 mt-3 font-medium">18 Oct Tak Ki Total Karkardgi Is Form Me Fill Farmay.</p>
         </div>
 
         <div id="config-error" class="hidden bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-md mb-6" role="alert">
@@ -225,7 +226,7 @@
             fetch(scriptURL, { method: 'POST', body: new FormData(form)})
                 .then(response => response.json())
                 .then(data => {
-                    responseMessage.textContent = 'THANKS..!';
+                    responseMessage.textContent = '!جزاک اللہ خیرا';
                     responseMessage.classList.add('text-green-600');
                     form.reset();
                     // Dropdowns ko reset karein
@@ -248,5 +249,4 @@
     </script>
 </body>
 </html>
-
 
